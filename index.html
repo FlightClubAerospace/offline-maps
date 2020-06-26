@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Offline Maps</title>
+        <style>
+            #map {
+                position: relative;
+                width: 400px;
+                height: 400px;
+                border: thin solid black;
+                overflow: hidden;
+            }
+
+            #marker {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                margin-left: -4px;
+                margin-top: -4px;
+                width: 8px;
+                height: 8px;
+                background-color: rgb(0, 68, 255);
+                box-shadow: 0 0 8px 8px rgba(0, 68, 255, 0.3);
+                border-radius: 4px;
+            }
+
+            #tiles {
+                position: absolute;
+            }
+
+            .row {
+                width: 200%;
+                font-size: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <form id="tileviewer">
+            <p>
+                <label for="lat">
+                    Latitude (deg):
+                    <input type="text" id="lat">
+                </label>
+            </p>
+            <p>
+                <label for="long">
+                    Longitude (deg):
+                    <input type="text" id="long">
+                </label>
+            </p>
+            <p>
+                <label for="zoom">
+                    Zoom level:
+                    <input type="text" id="zoom">
+                </label>
+            </p>
+            <input type="submit" value="View">
+        </form>
+        <div id="map">
+            <div id="tiles">
+            </div>
+            <div id="marker"></div>
+        </div>
+        <script src="main.ts"></script>
+    </body>
+</html>

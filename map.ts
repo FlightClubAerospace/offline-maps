@@ -57,3 +57,75 @@ export function buildTileGrid(lat: number, long: number, zoom: number, displayWi
         maxTileY: tileY + bottomPaddingTiles,
     };
 }
+
+export default class TileMap {
+    public lat?: number;
+    public long?: number;
+    public zoom?: number;
+    public width?: number;
+    public height?: number;
+
+    private outerContainer?: HTMLElement;
+    private innerContainer?: HTMLElement;
+    private rows?: HTMLElement[];
+    private tiles?: HTMLImageElement[][];
+
+    constructor(public root: HTMLElement) {}
+
+    init(): void {
+        this.width = this.root.clientWidth;
+        this.height = this.root.clientHeight;
+
+        const tileWidth = Math.ceil(this.width / TILE_RESOLUTION) + 1,
+            tileHeight = Math.ceil(this.height / TILE_RESOLUTION) + 1;
+
+        this.root.innerHTML = '';
+        this.outerContainer = document.createElement('div');
+        this.outerContainer.classList.add('map-outer-container');
+        this.innerContainer = document.createElement('div');
+        this.innerContainer.classList.add('map-inner-container');
+        this.outerContainer.appendChild(this.innerContainer);
+
+        this.rows = [];
+        this.tiles = [];
+
+        for (let i = 0; i < tileHeight; i++) {
+            const row = document.createElement('div');
+            row.classList.add('map-row');
+            this.rows.push(row);
+            this.tiles.push([]);
+
+            for (let j = 0; j < tileWidth; j++) {
+                const tile = document.createElement('img');
+                this.tiles[i].push(tile);
+                row.appendChild(tile);
+            }
+
+            this.innerContainer.appendChild(row);
+        }
+
+        this.root.appendChild(this.outerContainer);
+    }
+
+    update(lat: number, long: number, zoom: number): void {
+        this.lat = lat;
+        this.long = long;
+        this.zoom = zoom;
+        const tileGrid = buildTileGrid(lat, long, zoom, this.width, this.height);
+
+        for (const row of this.tiles) {
+            for (const tile of row) {
+                // tile.src = '';
+            }
+        }
+
+        for (let y = 0; y <= (tileGrid.maxTileY - tileGrid.minTileY); y++) {
+            for (let x = 0; x <= (tileGrid.maxTileX - tileGrid.minTileX); x++) {
+                this.tiles[y][x].src = `/tiles/${zoom}/${x + tileGrid.minTileX}/${y + tileGrid.minTileY}.png`;
+            }
+        }
+
+        this.innerContainer.style.left = `${tileGrid.offsetX}px`;
+        this.innerContainer.style.top = `${tileGrid.offsetY}px`;
+    }
+}

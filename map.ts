@@ -97,6 +97,11 @@ export default class TileMap {
 
             for (let j = 0; j < tileWidth; j++) {
                 const tile = document.createElement('img');
+                tile.style.left = `${j * TILE_RESOLUTION}px`;
+                tile.decoding = 'async';
+                tile.onerror = () => {
+                    tile.src = 'http://via.placeholder.com/256';
+                };
                 this.tiles[i].push(tile);
                 row.appendChild(tile);
             }
@@ -112,12 +117,6 @@ export default class TileMap {
         this.long = long;
         this.zoom = zoom;
         const tileGrid = buildTileGrid(lat, long, zoom, this.width, this.height);
-
-        for (const row of this.tiles) {
-            for (const tile of row) {
-                // tile.src = '';
-            }
-        }
 
         for (let y = 0; y <= (tileGrid.maxTileY - tileGrid.minTileY); y++) {
             for (let x = 0; x <= (tileGrid.maxTileX - tileGrid.minTileX); x++) {

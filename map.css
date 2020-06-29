@@ -3,6 +3,7 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
+    --tile-resolution: 256px;
 }
 
 .map-inner-container {
@@ -11,11 +12,14 @@
 
 .map-row {
     width: 200%;
-    height: 256px;
+    height: var(--tile-resolution);
     font-size: 0;
+    position: relative;
 }
 
 .map-row img {
-    width: 256px;
-    height: 256px;
+    width: var(--tile-resolution);
+    height: var(--tile-resolution);
+    position: absolute;
+    top: 0;
 }

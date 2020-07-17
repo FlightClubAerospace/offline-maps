@@ -1,6 +1,6 @@
 const myMap = L.map('map').setView([37.7706, -122.3782], 13);
 
-const path = L.polyline([], { color: '#000080c0' }).addTo(myMap);
+const path = L.polyline([], { color: '#00c0c0' }).addTo(myMap);
 L.control.scale().addTo(myMap);
 
 const offlineTiles = L.tileLayer('/static/tiles/{z}/{x}/{y}.png', {
@@ -13,13 +13,13 @@ const offlineTiles = L.tileLayer('/static/tiles/{z}/{x}/{y}.png', {
 const onlineTiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
-    id: 'mapbox/streets-v11',
+    id: 'mapbox/dark-v10',
     tileSize: 512,
     zoomOffset: -1,
     accessToken: 'pk.eyJ1IjoiMTkwbiIsImEiOiJja2JsYW5qcTYxNTI3MnlrMG53YmlpYzVjIn0.u7_fXPBlr9FvBkKByOF9lg',
 });
 
-offlineTiles.addTo(myMap);
+onlineTiles.addTo(myMap);
 
 function convertToDegrees(degrees, minutes) {
     if (degrees > 0) {

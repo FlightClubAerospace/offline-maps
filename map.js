@@ -1,3 +1,5 @@
+// TODO: MOVE THE ACCESS TOKEN INTO A HIDDEN FILE
+
 const myMap = L.map('map').setView([37.7706, -122.3782], 13);
 
 const path = L.polyline([], { color: '#00c0c0' }).addTo(myMap);
@@ -10,13 +12,17 @@ const offlineTiles = L.tileLayer('/static/tiles/{z}/{x}/{y}.png', {
     tileSize: 256,
 });
 
+if (typeof window.MAPBOX_ACCESS_TOKEN != 'string') {
+    console.warn('No Mapbox access token found. Only offline tiles will work.');
+}
+
 const onlineTiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
     id: 'mapbox/dark-v10',
     tileSize: 512,
     zoomOffset: -1,
-    accessToken: 'pk.eyJ1IjoiMTkwbiIsImEiOiJja2JsYW5qcTYxNTI3MnlrMG53YmlpYzVjIn0.u7_fXPBlr9FvBkKByOF9lg',
+    accessToken: window.MAPBOX_ACCESS_TOKEN,
 });
 
 onlineTiles.addTo(myMap);

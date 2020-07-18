@@ -3,3 +3,4 @@ node_modules
 .vscode
 dist
 map.geojson
+mapbox-access-token.js
